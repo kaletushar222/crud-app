@@ -1,4 +1,4 @@
-export const employees = [
+export const employeeData = [
     {
         id: 1,
         name: "Tushar",
@@ -21,6 +21,12 @@ export const employees = [
         id: 4,
         name: "Sheetal",
         designation: 'Frontend developer',
+        salary: 65000
+    },
+    {
+        id: 4,
+        name: "Umesh",
+        designation: 'Software developer',
         salary: 65000
     }
 ]
