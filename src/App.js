@@ -8,7 +8,7 @@ import { employeeData } from './static_data/employee_data'
 
 function App() {
 	if(!localStorage.getItem('employees')){
-		localStorage.setItem("employees", JSON.stringify(employeeData) );
+		localStorage.setItem("employees", JSON.stringify(employeeData) ); // loading initial static data
 	}
   	return (
 		<Router>

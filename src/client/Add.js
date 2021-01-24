@@ -9,7 +9,7 @@ class ComponentAdd extends Component {
         const employeeData = JSON.parse(localStorage.getItem("employees"))
         this.state={
             employee: {
-                id:Math.floor(Math.random() * 10000000),
+                id:Math.floor(Math.random() * 1000000000), //random id for employee
                 name: '',
                 designation: '',
                 salary: 0 
