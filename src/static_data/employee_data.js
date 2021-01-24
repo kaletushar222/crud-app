@@ -1,4 +1,4 @@
-export const employeeData = [
+export let employeeData = [
     {
         id: 1,
         name: "Tushar",
@@ -24,7 +24,7 @@ export const employeeData = [
         salary: 65000
     },
     {
-        id: 4,
+        id: 5,
         name: "Umesh",
         designation: 'Software developer',
         salary: 65000

@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
 import { Table, Container, Button, InputGroup, FormControl, Row, Col } from 'react-bootstrap';
-import { employeeData } from '../static_data/employee_data'
 
 class ComponentHome extends Component {
-    
+    // Home page component
     constructor(props) {
-        super(props);
+        super(props)
+        const employeeData = JSON.parse(localStorage.getItem("employees"))
         this.state={
+            employeeData : employeeData,
             employees : employeeData
         }
     }
 
     handleChange=(event)=>{
+        const { employeeData } = this.state
         let employees = employeeData
         if(event.target.value){
             let searchText = event.target.value.toUpperCase()
-            employees = employeeData.filter((emp)=>{
+            employees = employees.filter((emp)=>{
+                //matching case insensitive name, designation and salary
                 if(emp.name.toUpperCase().includes(searchText) || emp.designation.toUpperCase().includes(searchText) || (emp.salary.toString()).includes(searchText)){
-                    console.log("found")
                     return emp
                 }
             })
         }
+
         this.setState({
             employees : employees
         })
@@ -39,7 +42,7 @@ class ComponentHome extends Component {
                                 <InputGroup.Text id="basic-addon1">Filter</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl
-                                placeholder="Search Name / Designation / Salary"
+                                placeholder="Search Name, Designation or Salary"
                                 aria-label="Search Text"
                                 aria-describedby="basic-addon1"
                                 onChange={ this.handleChange }
