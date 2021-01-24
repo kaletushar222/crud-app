@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Container, Button, InputGroup, FormControl, Row, Col } from 'react-bootstrap';
+import CustomModal from './components/CustomModal'
 
 class ComponentHome extends Component {
     // Home page component
@@ -8,7 +9,9 @@ class ComponentHome extends Component {
         const employeeData = JSON.parse(localStorage.getItem("employees"))
         this.state={
             employeeData : employeeData,
-            employees : employeeData
+            employees : employeeData,
+            showDeleteModalFlag : false,
+            currentEmployeeId : ''
         }
     }
 
@@ -30,8 +33,36 @@ class ComponentHome extends Component {
         })
     }
 
+    handleDeleteClick = (event) =>{
+        this.setState({
+            showDeleteModalFlag : true,
+            currentEmployeeId : event.target.id
+        })
+    }
+
+    deleteEmployee = () =>{
+        let { employeeData, currentEmployeeId } = this.state
+        if(currentEmployeeId){
+            employeeData = employeeData.filter(emp=> emp.id != currentEmployeeId)
+            console.log("employeeData : ",employeeData)
+            localStorage.setItem("employees", JSON.stringify(employeeData))
+        }
+        this.setState({
+            employeeData: employeeData,
+            employees : employeeData,
+            showDeleteModalFlag : false
+        })
+    }
+
+    cancelDeleteEmployee = () =>{
+        console.log("cancel delete")
+        this.setState({
+            showDeleteModalFlag : false
+        })
+    }
+
     render() {
-        const { employees } = this.state
+        const { employees, showDeleteModalFlag } = this.state
         return (
             <Container>
                 <br /><br /><br /><br />
@@ -73,13 +104,14 @@ class ComponentHome extends Component {
                                         <td>{emp.designation}</td>
                                         <td>{emp.salary}</td>
                                         <td><Button href={"/edit/" + emp.id} variant="primary">Edit</Button></td>
-                                        <td><Button href={"/delete/" + emp.id} variant="danger">Delete</Button></td>
+                                        <td><Button onClick={ this.handleDeleteClick } id={ emp.id } variant="danger">Delete</Button></td>
                                     </tr>
                                 )
                             })
                         }
                     </tbody>
                 </Table>
+                <CustomModal title="Delete" body="Confirm to delete employee" showModalFlag={ showDeleteModalFlag }  handleConfirm={ this.deleteEmployee } handleCancel={ this.cancelDeleteEmployee }/>
             </Container>
         )
     }
