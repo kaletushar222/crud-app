@@ -44,7 +44,7 @@ class ComponentHome extends Component {
         let { employeeData, currentEmployeeId } = this.state
         if(currentEmployeeId){
             employeeData = employeeData.filter(emp=> emp.id != currentEmployeeId)
-            console.log("employeeData : ",employeeData)
+            //console.log("employeeData : ",employeeData)
             localStorage.setItem("employees", JSON.stringify(employeeData))
         }
         this.setState({
@@ -55,7 +55,6 @@ class ComponentHome extends Component {
     }
 
     cancelDeleteEmployee = () =>{
-        console.log("cancel delete")
         this.setState({
             showDeleteModalFlag : false
         })
@@ -80,7 +79,9 @@ class ComponentHome extends Component {
                             />
                         </InputGroup>
                     </Col>
-                    <Col/>
+                    <Col>
+                        <Button href="/add/" variant="success">Add Employee</Button>
+                    </Col>
                 </Row>
 
                 <Table striped bordered hover>

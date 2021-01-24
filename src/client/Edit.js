@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Button,Form, Row, Col } from 'react-bootstrap';
+import { Container, Button,Form, Row, Col, Alert } from 'react-bootstrap';
 import { withRouter } from "react-router"; // to get parameter values in props
 
 class ComponentEdit extends Component {
@@ -8,10 +8,12 @@ class ComponentEdit extends Component {
         super(props)
         const employeeData = JSON.parse(localStorage.getItem("employees"))
         let employee = employeeData.find(emp=> emp.id == props.match.params.id)
-        console.log("employee : ", employee)
+        //console.log("employee : ", employee)
         this.state={
             employee: employee,
-            employeeData : employeeData
+            employeeData : employeeData,
+            showAlert : false,
+            errorMessage : ''
         }
     }
 
@@ -27,20 +29,57 @@ class ComponentEdit extends Component {
     submitForm = (event) =>{
         event.preventDefault()
         const { employee, employeeData } = this.state
+
+        if(!employee.name){
+            return this.setState({
+                showAlert : true,
+                errorMessage : "Please Enter Name"
+            })
+        }
+
+        if(!employee.designation){
+            return this.setState({
+                showAlert : true,
+                errorMessage : "Please Enter Designation"
+            })
+        }
+
+        if(!employee.salary){
+            return this.setState({
+                showAlert : true,
+                errorMessage : "Please Enter Salary"
+            })
+        }
+
         let employee_to_update = employeeData.find(emp=> emp.id === employee.id)
         employee_to_update = employee // replace old employee by updated employee details
         localStorage.setItem("employees", JSON.stringify(employeeData) ) // updationg local storage
         this.props.history.push("/") // redirect to home page
     }
 
+    closeAlert = () =>{
+        this.setState({
+            showAlert : false,
+            errorMessage : ''
+        })
+    }
+
     render() {
-        const { employee } = this.state
+        const { employee, showAlert, errorMessage } = this.state
         return (
             <Container>
                 <br/><br/><br/><br/>
                 <Row>
                     <Col/>
                     <Col>
+                        {
+                            !showAlert?'':   
+                            <Alert variant="danger" onClose={ this.closeAlert } dismissible>
+                                <p>
+                                { errorMessage }
+                                </p>
+                            </Alert>
+                        }
                         <Form>
                             <Form.Group controlId="formBasicText">
                                 <Form.Label>Name</Form.Label>
