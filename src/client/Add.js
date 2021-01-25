@@ -73,7 +73,7 @@ class ComponentAdd extends Component {
                 <br/><br/><br/><br/>
                 <Row>
                     <Col/>
-                    <Col>
+                    <Col xs={8} sm={8} md={4} lg={4}>
                         {
                             !showAlert?'':   
                             <Alert variant="danger" onClose={ this.closeAlert } dismissible>
